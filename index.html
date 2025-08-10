@@ -3,9 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
+
+    <div class="container">
+
+        <h1 class="title">Tic-Tac-Toe Game</h1>
+
+        <p class="description">A simple Tic-Tac-Toe game built with HTML, CSS, and JavaScript.</p>
+       
+
+        <div class="scoreboard">
+            <div class="score" id="player-x-score">Player X: 0</div>
+            <div class="score" id="player-o-score">Player O: 0</div>
+        </div>
+
+           <!-- the labelling of 0, 1, 2, not needed(to be removed), just to show where X and O will be -->
+        <div class="game-board">
+            <div class="cell" id="cell-0">0</div>
+            <div class="cell" id="cell-1">1</div>
+            <div class="cell" id="cell-2">2</div>
+            <div class="cell" id="cell-3">3</div>
+            <div class="cell" id="cell-4">4</div>
+            <div class="cell" id="cell-5">5</div>
+            <div class="cell" id="cell-6">6</div>
+            <div class="cell" id="cell-7">7</div>
+            <div class="cell" id="cell-8">8</div>
+        </div>
+        <button id="reset-button">Reset Game</button>
+
+        <script> 
+
+            // logic X or O picks horizontal, vertical, or diagonal
+            // if X picks 0, O picks 1, X picks 2, O picks 3, etc.
+
+
+
+              //store gameboard as an array inside Gameboard object
+
+            const gameboardobj = {
+
+                
+                    gameboardarry: [0, 1, 2,
+                                3, 4, 5,
+                                6, 7, 8]
+                
+
+                
+            };
+           
+             const {  gameboardarry: [firstRow, ...otherRows] } = gameboardobj;
+
+             console.log(firstRow); 
+             console.log(otherRows); 
+             
+             // store players in object
+             const player = {
+
+                x: {
+                    name: "Player X",
+                    symbol: "X",
+                    score: 0
+                },
+
+                o: {
+                    name: "Player O",
+                    symbol: "O",
+                    score: 0
+                }   
+             }
+
+        </script>
     
 </body>
 </html>
