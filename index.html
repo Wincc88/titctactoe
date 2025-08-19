@@ -16,21 +16,21 @@
        
 
         <div class="scoreboard">
-            <div class="score" id="player-x-score">Player X: 0</div>
+            <div class="score" id="player-x-score">Player X: X</div>
             <div class="score" id="player-o-score">Player O: 0</div>
         </div>
 
            <!-- the labelling of 0, 1, 2, not needed(to be removed), just to show where X and O will be -->
         <div class="game-board">
-            <div class="cell" id="cell-0">0</div>
-            <div class="cell" id="cell-1">1</div>
-            <div class="cell" id="cell-2">2</div>
-            <div class="cell" id="cell-3">3</div>
-            <div class="cell" id="cell-4">4</div>
-            <div class="cell" id="cell-5">5</div>
-            <div class="cell" id="cell-6">6</div>
-            <div class="cell" id="cell-7">7</div>
-            <div class="cell" id="cell-8">8</div>
+            <div class="cell" id="cell-0">1</div>
+            <div class="cell" id="cell-1">2</div>
+            <div class="cell" id="cell-2">3</div>
+            <div class="cell" id="cell-3">4</div>
+            <div class="cell" id="cell-4">5</div>
+            <div class="cell" id="cell-5">6</div>
+            <div class="cell" id="cell-6">7</div>
+            <div class="cell" id="cell-7">8</div>
+            <div class="cell" id="cell-8">9</div>
         </div>
         <button id="reset-button">Reset Game</button>
 
@@ -46,34 +46,202 @@
             const gameboardobj = {
 
                 
-                    gameboardarry: [0, 1, 2,
-                                3, 4, 5,
-                                6, 7, 8]
+                    gameboardarry: [1, 2, 3,
+                                    4, 5, 6,
+                                    7, 8, 9]
                 
 
                 
             };
-           
-             const {  gameboardarry: [firstRow, ...otherRows] } = gameboardobj;
 
-             console.log(firstRow); 
-             console.log(otherRows); 
+
+               //destructure gameboardarry from gameboardobj
+               // to access the individual cells of the gameboard
+             const {  gameboardarry: [a, b, c, d, e, f, g, h, i] } = gameboardobj;
+
+             console.log(a, b, c, d, e, f, g, h, i ); 
+             console.log(b); 
+             console.log(gameboardobj.gameboardarry); // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+              const [X, O, blank] = ['X', 'O', '']; // destructuring to assign symbols to players
+              console.log(X, O, 'bnk'); // Output: O X empty string/whatever blank is
+              console.log(blank); // Output: empty string  
+                
+
+              // REMEMBER TO WRAP ALL FUNCTIONS IN MODULES OR IIFE TO AVOID GLOBAL SCOPE POLLUTION
+              // REMEMBER TO RETURN OBJECTS SO THE FUCTIONS CAN BE REUSED
+
+              // initialize the gameboard with blank cells
+              const emptyboard = {}; // create an empty object to hold the gameboard cells
+                // console.log (emptyboard); // Output: {}
+
+              function blankGameboard() {
+                
+                for (key in gameboardobj.gameboardarry) {
+                    // console.log(emptyCell/key); // Output: 0, 1, 2, 3, 4, 5, 6, 7, 8
+                    // loop through the gameboardarry and assign blank to each cell
+                    emptyboard[key] = blank; // assign blank to each cell
+                }
+                 console.log(emptyboard);
+                return emptyboard;
+              }
+              blankGameboard(); // call the function to initialize the gameboard
+
+              function isCellValid(emptyboard, key) {
+                // check if the cell is empty,  && still add key in gameboardobj.gameboardarry === blank 
+                // this will be for   [ X, O ], {key a, b, c: value X, O} pairs, 
+                if (emptyboard[key] === blank) {
+                    console.log(`Cell ${key} is valid`);
+                    return true; // returns true if cell is valid
+                } else {
+                    console.log(`Cell ${key} is not valid`);
+                    return false; // returns false if cell is not valid
+                }
+              }
+                isCellValid(emptyboard, c); // call the function to check if cell 0 is valid
              
-             // store players in object
-             const player = {
+              function isGameboardFull(emptyboard) {
+                if(blankGameboard) {
+                    console.log("Gameboard is not full");
+                    return false; // returns true if gameboard is not full
+                } else {
+                    console.log("Gameboard is full");
+                    return true; // returns true if gameboard is full
+                }
+              }
+              isGameboardFull(emptyboard); // call the function to check if gameboard is full
+                
+              function addtexttogameboard(emptyboard) {
+                console.log (
+                     `
+                     ${emptyboard = '1'}, ${emptyboard = '2'}, ${emptyboard = '3'},
+                     ${emptyboard = '4'}, ${emptyboard = '5'}, ${emptyboard = '6'},
+                     ${emptyboard = '7'}, ${emptyboard = '8'}, ${emptyboard = '9'}`
+                     
+                )
+                // this is a template literal to add text to the gameboard cells
 
-                x: {
-                    name: "Player X",
+              }
+              addtexttogameboard(emptyboard); // call the function to add text to gameboard
+
+              
+             
+             // store players in players object
+            
+               const playerOne = {
+                    name: "Playerone",
                     symbol: "X",
                     score: 0
-                },
+                };
 
-                o: {
-                    name: "Player O",
+               const playerTwo = {
+                    name: "Playertwo",
                     symbol: "O",
                     score: 0
-                }   
-             }
+                };   
+             
+            
+             //destruct players object to access player names, symbols, and scores
+            const { name, symbol, score } = playerOne;
+
+            const { name: playerTwoname, symbol: playerTwosymb, score: playerTwoscore } = playerTwo;
+           
+                                                                
+            console.log(name, symbol, score);
+            console.log(playerTwoname, playerTwosymb, playerTwoscore);
+            
+
+
+            function printName(player) {
+                if (player === playerOne) {
+                    console.log(name);
+                } else if (player === playerTwo) {
+                    console.log(playerTwoname);
+                } else {
+                    console.log("Unknown Player");
+                }
+                
+            }
+              // print names of players 
+              //can remove const players and make the two players variables...but leave for now
+            printName(playerOne);
+            printName(playerTwo);
+
+
+            function getPlayerSymbol(player) {
+                if (player === playerOne) {
+                    console.log(symbol);
+                    return symbol;
+                } else if (player === playerTwo) {
+                    console.log(playerTwosymb);
+                    return playerTwosymb;
+                } else {
+                    console.log("Unknown Player");
+                    return "Unknown Symbol";
+                }
+            }
+            getPlayerSymbol(playerOne); // call the function to get player one's symbol
+            getPlayerSymbol(playerTwo); // call the function to get player two's symbol
+            
+
+            function increaseScore ()  {
+                if (symbol && "..." ) {
+
+                }
+            }
+
+            // this will update the score of the players
+            function updatePlayerScore(player) {
+                if (player === playerOne) {
+                    playerOne.score += 1; // increment score for player X
+                } else if (player === playerTwo) {
+                    playerTwo.playerTwoscore += 1; // increment score for player O
+                } else {
+                    console.log("Unknown Player");
+                }
+            }
+
+            // this will update the score on the scoreboard
+            function updateScore() {
+
+                 document.getElementById("player-x-score").textContent = `Player X: ${score}`;
+                 document.getElementById("player-o-score").textContent = `Player O: ${playerTwoscore}`;
+             
+            }
+                
+                 // check if symbol is marked on the gameboard
+            function isCellMarked(cell) {
+                return cell.textContent !== ''; // returns true if cell is not empty
+            }
+            
+            
+                 // 5 games played, then reset the game
+            function gameOver(winningPlayer) {
+
+                 if (symbol === 5 && playerTwosymb < 5) {
+                     
+                        console.log("Game Over");
+                        printName(playerOne);
+                        console.log(`Congratulations, ${winningPlayer.name}!!!`);
+                        console.log(`${winningPlayer.name} wins!`);
+                        alert("You win!");
+                        return true;
+
+                } else if (playerTwosymb === 5 && symbol < 5) {
+
+                        console.log("Game Over");
+                        printName(playerTwo);
+                        console.log(`Congratulations, ${winningPlayer.name}!!!`);
+                        console.log(`${winningPlayer.name} wins!`);
+                        alert("You win!");
+                        return true;
+                    }
+                    return false;
+                            
+                
+            } 
+            gameOver(name); // use this funcytion to check if the game is over
+
 
         </script>
     
