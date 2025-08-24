@@ -46,22 +46,26 @@
             const gameboardobj = {
 
                 
-                    gameboardarry: [1, 2, 3,
-                                    4, 5, 6,
-                                    7, 8, 9]
+                    gameboardarry: ["1", "2", "3",
+                                    "4", "5", "6",
+                                    "7", "8", "9"]
                 
 
                 
             };
 
 
-               //destructure gameboardarry from gameboardobj
+              
                // to access the individual cells of the gameboard
-             const {  gameboardarry: [a, b, c, d, e, f, g, h, i] } = gameboardobj;
+               //const {  gameboardarry: [a, b, c, d, e, f, g, h, i] } = gameboardobj;
+             const { gameboardarry } = gameboardobj; // destructuring to access the gameboard array independently
+             console.log(gameboardarry); // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+             console.log(gameboardarry[0]); // Output: 1
+        
 
-             console.log(a, b, c, d, e, f, g, h, i ); 
-             console.log(b); 
-             console.log(gameboardobj.gameboardarry); // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+               // console.log(a, b, c, d, e, f, g, h, i ); 
+               //Because gameboardarry is a property inside the gameboardobj object — it's not a variable in the outer scope.
+               //console.log(gameboardobj.gameboardarry); // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9], right way to access the arry in the object
 
               const [X, O, blank] = ['X', 'O', '']; // destructuring to assign symbols to players
               console.log(X, O, 'bnk'); // Output: O X empty string/whatever blank is
@@ -72,57 +76,117 @@
               // REMEMBER TO RETURN OBJECTS SO THE FUCTIONS CAN BE REUSED
 
               // initialize the gameboard with blank cells
-              const emptyboard = {}; // create an empty object to hold the gameboard cells
+              // const emptyboard = {}; // create an empty object to hold the gameboard cells
                 // console.log (emptyboard); // Output: {}
+
+              function getboardnumber(gameboardarry) {
+                //output the text content of each cell in the gameboard
+                console.log(
+                    `
+                    ${gameboardarry[0]}, ${gameboardarry[1]}, ${gameboardarry[2]},
+                    ${gameboardarry[3]}, ${gameboardarry[4]}, ${gameboardarry[5]},
+                    ${gameboardarry[6]}, ${gameboardarry[7]}, ${gameboardarry[8]}`
+                );  
+               } 
+                getboardnumber(gameboardarry); // call the function to get the board numbers
 
               function blankGameboard() {
                 
-                for (key in gameboardobj.gameboardarry) {
-                    // console.log(emptyCell/key); // Output: 0, 1, 2, 3, 4, 5, 6, 7, 8
-                    // loop through the gameboardarry and assign blank to each cell
-                    emptyboard[key] = blank; // assign blank to each cell
-                }
-                 console.log(emptyboard);
-                return emptyboard;
+                for (elem in gameboardarry) {
+                    gameboardarry[elem] = blank; // set each cell to blank
+                }   
+                console.log(gameboardarry); // Output: ['', '', '', '', '', '', '', '', '']
+                return gameboardarry; // return the updated gameboard array
               }
               blankGameboard(); // call the function to initialize the gameboard
+               
 
-              function isCellValid(emptyboard, key) {
-                // check if the cell is empty,  && still add key in gameboardobj.gameboardarry === blank 
-                // this will be for   [ X, O ], {key a, b, c: value X, O} pairs, 
-                if (emptyboard[key] === blank) {
-                    console.log(`Cell ${key} is valid`);
-                    return true; // returns true if cell is valid
+              
+
+              function isCellValid(gameboardarry, elem) {
+                  //returns true if cell is a valid element number and blank
+                  // elem is the index of the cell to check i.e 0 - 8
+                if (gameboardarry[elem] === blank) {
+                    console.log("Cell is valid (blank)");
                 } else {
-                    console.log(`Cell ${key} is not valid`);
-                    return false; // returns false if cell is not valid
+                    console.log("Cell is not valid (not blank)");
                 }
+                return gameboardarry[elem] === blank; // returns true if cell is blank
               }
-                isCellValid(emptyboard, c); // call the function to check if cell 0 is valid
-             
-              function isGameboardFull(emptyboard) {
-                if(blankGameboard) {
-                    console.log("Gameboard is not full");
-                    return false; // returns true if gameboard is not full
+                console.log(isCellValid(gameboardarry, 10)); // call the function to check if cell 0 is valid (blank)
+                console.log(isCellValid(gameboardarry, 8));
+               // getboardnumber(gameboardarry);
+            
+             function markCell(gameboardarry, elem, symbol) {
+                // marks the cell with the player's symbol if the cell is valid (blank)
+                if (isCellValid(gameboardarry, elem)) {
+                    gameboardarry[elem] = symbol; // mark the cell with the player's symbol
+                    console.log(`Cell ${elem} marked with ${symbol}`);
                 } else {
-                    console.log("Gameboard is full");
-                    return true; // returns true if gameboard is full
+                    console.log(`Cell ${elem} is not valid (not blank), cannot mark with ${symbol}`);
                 }
+                return gameboardarry; // return the updated gameboard array
               }
-              isGameboardFull(emptyboard); // call the function to check if gameboard is full
+              console.log(markCell(gameboardarry, 0, X)); // call the function to mark cell 0 with X
+              console.log(markCell(gameboardarry, 2, O)); // call the function to mark cell 2 with O
+              console.log(markCell(gameboardarry, 1, O)); // call the function to mark cell 1 with O
+              getboardnumber(gameboardarry); // call the function to get the board numbers
+
+              function iswinner(gameboardarry, player) {
+                // checks if there is a winner
+                const winningCombinations = [
+                    [0, 1, 2], // horizontal
+                    [3, 4, 5],
+                    [6, 7, 8],
+                    [0, 3, 6], // vertical
+                    [1, 4, 7],
+                    [2, 5, 8],
+                    [0, 4, 8], // diagonal
+                    [2, 4, 6]
+                ];
+
+                for (const combination of winningCombinations) {
+                    const [a, b, c] = combination;
+                    if (gameboardarry[a] && gameboardarry[a] === gameboardarry[b] && gameboardarry[a] === gameboardarry[c]) {
+                        console.log(`Winner is ${gameboardarry[a]}`);
+                        return gameboardarry[a]; // return the symbol of the winning player
+                    }
+                }
+                console.log("No winner yet");
+                return null; // return null if there is no winner yet
+              }
+                console.log(iswinner(gameboardarry, O)); // call the function to check if there is a winner
+ 
+
+              function isBoardFull (gameboardarry) {
+                // checks if the gameboard is full
+                for (const cell of gameboardarry) {
+                    if (cell === blank) {
+                        console.log("Gameboard is not full");
+                        return false; // returns true if gameboard is not full
+                    }
+                }
+                console.log("Gameboard is full");
+                return true; // returns true if gameboard is full
+              }
+                console.log(isBoardFull(gameboardarry)); // call the function to check if gameboard is full
+
+
+               function updateGameboardDisplay(gameboardarry) {
+                // updates the display of the gameboard
+                for (let i = 0; i < gameboardarry.length; i++) {
+                    const cell = document.getElementById(`cell-${i}`);
+                    cell.textContent = gameboardarry[i]; // update the text content of each cell
+                }   
+                console.log("Gameboard display updated");
+               }
+                updateGameboardDisplay(gameboardarry); // call the function to update the gameboard display
                 
-              function addtexttogameboard(emptyboard) {
-                console.log (
-                     `
-                     ${emptyboard = '1'}, ${emptyboard = '2'}, ${emptyboard = '3'},
-                     ${emptyboard = '4'}, ${emptyboard = '5'}, ${emptyboard = '6'},
-                     ${emptyboard = '7'}, ${emptyboard = '8'}, ${emptyboard = '9'}`
-                     
-                )
-                // this is a template literal to add text to the gameboard cells
 
-              }
-              addtexttogameboard(emptyboard); // call the function to add text to gameboard
+
+
+
+    
 
               
              

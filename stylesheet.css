@@ -19,13 +19,50 @@
     border-bottom: 2px solid #333;
 }
 
+:root {
+    --border: 3px solid black;
+}
+    
 .game-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    width: 300px;
+    grid-template-rows: repeat(3, 1fr);
+    width: fit-content;
     border: 5px solid #333;
     padding: 10px;
     margin: 20px;    /* add 20px auto centers the game board on the page */
     text-align: center;
+   
 }
+
+
+
+.cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    cursor: pointer;
+    background-color: #fff;
+    position: relative;
+    
+}
+
+.cell:not(:nth-child(3n)) {
+    border-right: 2px solid #333;
+}
+.cell:not(:nth-last-child(-n+3)) {
+    border-bottom: 2px solid #333;
+}
+
+.cell:hover {
+    background-color: #f0f0f0;
+}
+.cell:active {
+    background-color: #ccc;
+}
+
+
+
