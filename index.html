@@ -16,9 +16,11 @@
        
 
         <div class="scoreboard">
-            <div class="score" id="player-x-score">Player X: X</div>
-            <div class="score" id="player-o-score">Player O: 0</div>
+            <div class="score" id="player-x-score">Player 1: X</div>
+            <div class="score" id="player-o-score">Player 2: 0</div>
         </div>
+
+        <button id="start-button">Start Game</button>
 
            <!-- the labelling of 0, 1, 2, not needed(to be removed), just to show where X and O will be -->
         <div class="game-board">
@@ -36,12 +38,10 @@
 
         <script> 
 
-            // logic X or O picks horizontal, vertical, or diagonal
-            // if X picks 0, O picks 1, X picks 2, O picks 3, etc.
-
 
 
               //store gameboard as an array inside Gameboard object
+              //named-cell  1 -9, position 0 - 8
 
             const gameboardobj = {
 
@@ -55,21 +55,17 @@
             };
 
 
-              
-               // to access the individual cells of the gameboard
-               //const {  gameboardarry: [a, b, c, d, e, f, g, h, i] } = gameboardobj;
              const { gameboardarry } = gameboardobj; // destructuring to access the gameboard array independently
              console.log(gameboardarry); // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
              console.log(gameboardarry[0]); // Output: 1
         
 
-               // console.log(a, b, c, d, e, f, g, h, i ); 
                //Because gameboardarry is a property inside the gameboardobj object — it's not a variable in the outer scope.
                //console.log(gameboardobj.gameboardarry); // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9], right way to access the arry in the object
 
               const [X, O, blank] = ['X', 'O', '']; // destructuring to assign symbols to players
               console.log(X, O, 'bnk'); // Output: O X empty string/whatever blank is
-              console.log(blank); // Output: empty string  
+              console.log(blank); // Output: empty string  .. checking if blank is working
                 
 
               // REMEMBER TO WRAP ALL FUNCTIONS IN MODULES OR IIFE TO AVOID GLOBAL SCOPE POLLUTION
@@ -79,7 +75,7 @@
               // const emptyboard = {}; // create an empty object to hold the gameboard cells
                 // console.log (emptyboard); // Output: {}
 
-              function getboardnumber(gameboardarry) {
+              function getBoardStr(gameboardarry) {
                 //output the text content of each cell in the gameboard
                 console.log(
                     `
@@ -87,35 +83,39 @@
                     ${gameboardarry[3]}, ${gameboardarry[4]}, ${gameboardarry[5]},
                     ${gameboardarry[6]}, ${gameboardarry[7]}, ${gameboardarry[8]}`
                 );  
+                
                } 
-                getboardnumber(gameboardarry); // call the function to get the board numbers
+                getBoardStr(gameboardarry); // call the function to get what is in poisition 0 - 8 of the gameboararry
 
+               
+                // call the function to initialize the gameboard with blank cells
               function blankGameboard() {
                 
                 for (elem in gameboardarry) {
+                    //elem here is the elem or space of the cell in the gameboard array
                     gameboardarry[elem] = blank; // set each cell to blank
                 }   
                 console.log(gameboardarry); // Output: ['', '', '', '', '', '', '', '', '']
                 return gameboardarry; // return the updated gameboard array
               }
-              blankGameboard(); // call the function to initialize the gameboard
+              blankGameboard(); 
                
 
               
 
               function isCellValid(gameboardarry, elem) {
-                  //returns true if cell is a valid element number and blank
-                  // elem is the index of the cell to check i.e 0 - 8
-                if (gameboardarry[elem] === blank) {
+                  //returns true if cell is a valid element(space/position) number and blank
+                  // elem is the elem of the cell to check i.e 0 - 8
+                if (elem >= 0 && elem < 9 && gameboardarry[elem] === blank) {
                     console.log("Cell is valid (blank)");
                 } else {
                     console.log("Cell is not valid (not blank)");
                 }
-                return gameboardarry[elem] === blank; // returns true if cell is blank
+                return gameboardarry[elem] === blank; // returns true if cell is blank and elem is a valid elem(>=0 and <=8)
               }
-                console.log(isCellValid(gameboardarry, 10)); // call the function to check if cell 0 is valid (blank)
+                console.log(isCellValid(gameboardarry, 9)); // call the function to check if cell 9 is valid and also blank
                 console.log(isCellValid(gameboardarry, 8));
-               // getboardnumber(gameboardarry);
+               // getBoardStr(gameboardarry);
             
              function markCell(gameboardarry, elem, symbol) {
                 // marks the cell with the player's symbol if the cell is valid (blank)
@@ -127,13 +127,11 @@
                 }
                 return gameboardarry; // return the updated gameboard array
               }
-              console.log(markCell(gameboardarry, 0, X)); // call the function to mark cell 0 with X
-              console.log(markCell(gameboardarry, 2, O)); // call the function to mark cell 2 with O
-              console.log(markCell(gameboardarry, 1, O)); // call the function to mark cell 1 with O
-              getboardnumber(gameboardarry); // call the function to get the board numbers
+                
 
               function iswinner(gameboardarry, player) {
-                // checks if there is a winner
+                
+                // checks winning permutations
                 const winningCombinations = [
                     [0, 1, 2], // horizontal
                     [3, 4, 5],
@@ -160,8 +158,8 @@
 
               function isBoardFull (gameboardarry) {
                 // checks if the gameboard is full
-                for (const cell of gameboardarry) {
-                    if (cell === blank) {
+                for (elem of gameboardarry) {
+                    if (elem === blank) {
                         console.log("Gameboard is not full");
                         return false; // returns true if gameboard is not full
                     }
@@ -170,18 +168,136 @@
                 return true; // returns true if gameboard is full
               }
                 console.log(isBoardFull(gameboardarry)); // call the function to check if gameboard is full
+              
 
+              const playerOne = {
+                        name: "Player One",
+                        symbol: "X",
+                        score: 0
+                    };
 
+              const playerTwo = {
+                        name: "Player Two",
+                        symbol: "O",
+                        score: 0
+                    };
+
+                    let currentPlayer = playerOne;
+
+                    // Update the gameboard display
+              function updateGameboardDisplay(gameboardarry) {
+                for (let i = 0; i < gameboardarry.length; i++) {
+                    const cell = document.getElementById(`cell-${i}`);
+                    cell.textContent = gameboardarry[i];
+                }
+              }
+
+                    // Disable board until game starts
+              let gameOn = false;
+              
+              function setBoardEnabled(enabled) {
+                for (let i = 0; i < gameboardarry.length; i++) {
+                     document.getElementById(`cell-${i}`).style.pointerEvents = enabled ? 'auto' : 'none';
+                }
+              }
+
+              setBoardEnabled(false);
+
+                    // Start button functionality
+                    document.getElementById('start-button').addEventListener('click', function () {
+                        blankGameboard();
+                        updateGameboardDisplay(gameboardarry);
+                        currentPlayer = playerOne;
+                        setBoardEnabled(true);
+                        gameOn = true;
+                        messageDiv.textContent = `${currentPlayer.name}'s turn (${currentPlayer.symbol})`;
+                    });
+
+                    const messageDiv = document.createElement('div');
+                    messageDiv.id = 'game-message';
+                    document.querySelector('.container').appendChild(messageDiv);
+
+                      // Handle cell clicks
+             function handleCellClick(elem) {
+
+                if (!gameOn) return; // ignore clicks if game is not active
+                 
+                if (isCellValid(gameboardarry, elem) && !iswinner(gameboardarry, currentPlayer)) {
+
+                    markCell(gameboardarry, elem, currentPlayer.symbol);
+                    updateGameboardDisplay(gameboardarry);
+                    
+                    const winnerSymbol = iswinner(gameboardarry, currentPlayer);
+                    
+                    if (winnerSymbol) {
+                        // alert(`${currentPlayer.name} wins!`);
+                        messageDiv.textContent = `${currentPlayer.name} wins!`;
+                        updatePlayerScore(currentPlayer);
+                        updateScore();
+                        setBoardEnabled(false);
+                        gameOn = false;
+                          return;
+                    }
+
+                    if (isBoardFull(gameboardarry)) {
+                        // alert("It's a tie!");
+                        messageDiv.textContent = "It's a tie!";
+                        setBoardEnabled(false);
+                        gameOn = false;
+                         return;
+                    }
+
+                    if (currentPlayer === playerOne) {
+                        currentPlayer = playerTwo;
+                    } 
+                    else {
+                        currentPlayer = playerOne;
+                    }
+                    
+                    messageDiv.textContent = `${currentPlayer.name}'s turn (${currentPlayer.symbol})`;
+                }
+              }
+
+                    // Add event listeners to cells
+                    for (let i = 0; i < gameboardarry.length; i++) {
+                        document.getElementById(`cell-${i}`).addEventListener('click', () => handleCellClick(i));
+                    }
+
+                    // Reset button functionality
+                    document.getElementById('reset-button').addEventListener('click', function () {
+                        blankGameboard();
+                        updateGameboardDisplay(gameboardarry);
+                        currentPlayer = playerOne;
+                        setBoardEnabled(false);
+                        gameOn = false;
+                        messageDiv.textContent = "Game reset. Click 'Start Game' to play again.";
+                    });
+
+                    // Update player score
+             function updatePlayerScore(player) {
+                player.score += 1;
+             }
+
+                    // Update scoreboard display
+             function updateScore() {
+                 document.getElementById("player-x-score").textContent = `Player X: ${playerOne.score}`;
+                 document.getElementById("player-o-score").textContent = `Player O: ${playerTwo.score}`;
+            }
+
+                    // Initial board display
+            updateGameboardDisplay(gameboardarry);
+
+               /**
                function updateGameboardDisplay(gameboardarry) {
                 // updates the display of the gameboard
                 for (let i = 0; i < gameboardarry.length; i++) {
                     const cell = document.getElementById(`cell-${i}`);
                     cell.textContent = gameboardarry[i]; // update the text content of each cell
                 }   
-                console.log("Gameboard display updated");
+                console.log("Gameboard display updated with markedCell() symbols");
                }
                 updateGameboardDisplay(gameboardarry); // call the function to update the gameboard display
-                
+                **/
 
 
 
@@ -190,26 +306,8 @@
 
               
              
-             // store players in players object
-            
-               const playerOne = {
-                    name: "Playerone",
-                    symbol: "X",
-                    score: 0
-                };
-
-               const playerTwo = {
-                    name: "Playertwo",
-                    symbol: "O",
-                    score: 0
-                };   
              
-            
-             //destruct players object to access player names, symbols, and scores
-            const { name, symbol, score } = playerOne;
-
-            const { name: playerTwoname, symbol: playerTwosymb, score: playerTwoscore } = playerTwo;
-           
+           /**
                                                                 
             console.log(name, symbol, score);
             console.log(playerTwoname, playerTwosymb, playerTwoscore);
@@ -247,6 +345,41 @@
             getPlayerSymbol(playerOne); // call the function to get player one's symbol
             getPlayerSymbol(playerTwo); // call the function to get player two's symbol
             
+
+            function testinhere() {
+                gamingBoard = blankGameboard();
+                
+                while (true) { 
+                    // player one's turn
+                    let playerOneMove = clickpositionin; //prompt("Player One, enter your move (0-8): ");
+                    markCell(gamingBoard, playerOneMove, X);
+                    updateGameboardDisplay(gamingBoard);
+                    if (iswinner(gamingBoard, playerOne)) {
+                        console.log("Player One wins!");
+                        break;
+                    }
+                    if (isBoardFull(gamingBoard)) {
+                        console.log("It's a tie!");
+                        break;
+                    }
+
+                    // player two's turn
+                    let playerTwoMove = prompt("Player Two, enter your move (0-8): ");
+                    markCell(gamingBoard, playerTwoMove, O);
+                    updateGameboardDisplay(gamingBoard);
+                    if (iswinner(gamingBoard, playerTwo)) {
+                        console.log("Player Two wins!");
+                        break;
+                    }
+                    if (isBoardFull(gamingBoard)) {
+                        console.log("It's a tie!");
+                        break;
+                    }
+                }
+            }
+            //testinhere(); // call the function to start the game loop in the console
+
+
 
             function increaseScore ()  {
                 if (symbol && "..." ) {
@@ -304,7 +437,7 @@
                             
                 
             } 
-            gameOver(name); // use this funcytion to check if the game is over
+            gameOver(name); // use this funcytion to check if the game is over **/
 
 
         </script>

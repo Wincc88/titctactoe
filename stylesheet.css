@@ -64,5 +64,10 @@
     background-color: #ccc;
 }
 
+#game-message {
+    margin: center;
+    font-size: 25px;
+    text-align: center;
+}
 
 
