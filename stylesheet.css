@@ -1,18 +1,72 @@
 * {
-    margin: 0;
     box-sizing: border-box;
 }
 
 .container {
        
  /*  text-align: center; */   
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers children horizontally */
+    justify-content: flex-start;
     background-color: #f9f9f9;  
     
 }
 
+.top-section {
+    display: flex;
+    text-align: center; 
+    padding: 20px;
+    background-color: none;
+    border-bottom: 2px solid #e0e0e0;;
+}
+
+
+
+#start-button {
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: none;
+}
+#reset-button {
+    cursor: pointer;
+    margin-top: none;
+    margin-bottom: none;
+}
+
+#start-button:hover, #reset-button:hover {
+    opacity: 0.8;
+}
+.screen-message {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: bold;
+    min-height: 32px; /* to prevent layout shift when message changes */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: fit-content;
+    height: fit-content;
+    border: 5px solid #333;
+    padding: 10px;
+    margin: 20px;    /* add 20px auto centers the game board on the page */
+    text-align: center;
+   
+}
+
+
 .scoreboard {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    width: 250px;
     margin-top: 19px;
     padding: 10px;
     background-color: #f0f0f0;
@@ -23,18 +77,6 @@
     --border: 3px solid black;
 }
     
-.game-board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    width: fit-content;
-    border: 5px solid #333;
-    padding: 10px;
-    margin: 20px;    /* add 20px auto centers the game board on the page */
-    text-align: center;
-   
-}
-
 
 
 .cell {

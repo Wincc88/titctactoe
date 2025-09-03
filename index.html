@@ -9,10 +9,10 @@
 <body>
 
     <div class="container">
-
-        <h1 class="title">Tic-Tac-Toe Game</h1>
-
-        <p class="description">A simple Tic-Tac-Toe game built with HTML, CSS, and JavaScript.</p>
+      
+       <div class="top-section">
+            <h1 class="description">A simple Tic-Tac-Toe game built with HTML, CSS, and JavaScript.</h1>
+       </div>
        
 
         <div class="scoreboard">
@@ -21,6 +21,8 @@
         </div>
 
         <button id="start-button">Start Game</button>
+
+        <div class="screen-message"> </div>
 
            <!-- the labelling of 0, 1, 2, not needed(to be removed), just to show where X and O will be -->
         <div class="game-board">
@@ -34,7 +36,10 @@
             <div class="cell" id="cell-7">8</div>
             <div class="cell" id="cell-8">9</div>
         </div>
+
         <button id="reset-button">Reset Game</button>
+
+    </div>
 
         <script> 
 
@@ -191,6 +196,7 @@
                     cell.textContent = gameboardarry[i];
                 }
               }
+                updateGameboardDisplay(gameboardarry); // call the function to update the gameboard display, else populates with 1 - 9
 
                     // Disable board until game starts
               let gameOn = false;
@@ -215,7 +221,7 @@
 
                     const messageDiv = document.createElement('div');
                     messageDiv.id = 'game-message';
-                    document.querySelector('.container').appendChild(messageDiv);
+                    document.querySelector('.screen-message').appendChild(messageDiv);
 
                       // Handle cell clicks
              function handleCellClick(elem) {
@@ -284,160 +290,8 @@
                  document.getElementById("player-o-score").textContent = `Player O: ${playerTwo.score}`;
             }
 
-                    // Initial board display
-            updateGameboardDisplay(gameboardarry);
+                    
 
-               /**
-               function updateGameboardDisplay(gameboardarry) {
-                // updates the display of the gameboard
-                for (let i = 0; i < gameboardarry.length; i++) {
-                    const cell = document.getElementById(`cell-${i}`);
-                    cell.textContent = gameboardarry[i]; // update the text content of each cell
-                }   
-                console.log("Gameboard display updated with markedCell() symbols");
-               }
-                updateGameboardDisplay(gameboardarry); // call the function to update the gameboard display
-                **/
-
-
-
-
-    
-
-              
-             
-             
-           /**
-                                                                
-            console.log(name, symbol, score);
-            console.log(playerTwoname, playerTwosymb, playerTwoscore);
-            
-
-
-            function printName(player) {
-                if (player === playerOne) {
-                    console.log(name);
-                } else if (player === playerTwo) {
-                    console.log(playerTwoname);
-                } else {
-                    console.log("Unknown Player");
-                }
-                
-            }
-              // print names of players 
-              //can remove const players and make the two players variables...but leave for now
-            printName(playerOne);
-            printName(playerTwo);
-
-
-            function getPlayerSymbol(player) {
-                if (player === playerOne) {
-                    console.log(symbol);
-                    return symbol;
-                } else if (player === playerTwo) {
-                    console.log(playerTwosymb);
-                    return playerTwosymb;
-                } else {
-                    console.log("Unknown Player");
-                    return "Unknown Symbol";
-                }
-            }
-            getPlayerSymbol(playerOne); // call the function to get player one's symbol
-            getPlayerSymbol(playerTwo); // call the function to get player two's symbol
-            
-
-            function testinhere() {
-                gamingBoard = blankGameboard();
-                
-                while (true) { 
-                    // player one's turn
-                    let playerOneMove = clickpositionin; //prompt("Player One, enter your move (0-8): ");
-                    markCell(gamingBoard, playerOneMove, X);
-                    updateGameboardDisplay(gamingBoard);
-                    if (iswinner(gamingBoard, playerOne)) {
-                        console.log("Player One wins!");
-                        break;
-                    }
-                    if (isBoardFull(gamingBoard)) {
-                        console.log("It's a tie!");
-                        break;
-                    }
-
-                    // player two's turn
-                    let playerTwoMove = prompt("Player Two, enter your move (0-8): ");
-                    markCell(gamingBoard, playerTwoMove, O);
-                    updateGameboardDisplay(gamingBoard);
-                    if (iswinner(gamingBoard, playerTwo)) {
-                        console.log("Player Two wins!");
-                        break;
-                    }
-                    if (isBoardFull(gamingBoard)) {
-                        console.log("It's a tie!");
-                        break;
-                    }
-                }
-            }
-            //testinhere(); // call the function to start the game loop in the console
-
-
-
-            function increaseScore ()  {
-                if (symbol && "..." ) {
-
-                }
-            }
-
-            // this will update the score of the players
-            function updatePlayerScore(player) {
-                if (player === playerOne) {
-                    playerOne.score += 1; // increment score for player X
-                } else if (player === playerTwo) {
-                    playerTwo.playerTwoscore += 1; // increment score for player O
-                } else {
-                    console.log("Unknown Player");
-                }
-            }
-
-            // this will update the score on the scoreboard
-            function updateScore() {
-
-                 document.getElementById("player-x-score").textContent = `Player X: ${score}`;
-                 document.getElementById("player-o-score").textContent = `Player O: ${playerTwoscore}`;
-             
-            }
-                
-                 // check if symbol is marked on the gameboard
-            function isCellMarked(cell) {
-                return cell.textContent !== ''; // returns true if cell is not empty
-            }
-            
-            
-                 // 5 games played, then reset the game
-            function gameOver(winningPlayer) {
-
-                 if (symbol === 5 && playerTwosymb < 5) {
-                     
-                        console.log("Game Over");
-                        printName(playerOne);
-                        console.log(`Congratulations, ${winningPlayer.name}!!!`);
-                        console.log(`${winningPlayer.name} wins!`);
-                        alert("You win!");
-                        return true;
-
-                } else if (playerTwosymb === 5 && symbol < 5) {
-
-                        console.log("Game Over");
-                        printName(playerTwo);
-                        console.log(`Congratulations, ${winningPlayer.name}!!!`);
-                        console.log(`${winningPlayer.name} wins!`);
-                        alert("You win!");
-                        return true;
-                    }
-                    return false;
-                            
-                
-            } 
-            gameOver(name); // use this funcytion to check if the game is over **/
 
 
         </script>
