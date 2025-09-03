@@ -5,4 +5,4 @@ TicTactToe gme in JS.
 To be added...
 
 ### Completion 
-- not yet
+- Done
